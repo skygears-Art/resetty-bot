@@ -1,0 +1,31 @@
+```cron is a format use on crontab a program that allow you
+to execute comands on a diferent time
+
+in the case of this bot is use to set the "reset schedule"
+
+the way cronset must be use is by doing this
+--cron `* * * * *`
+those can represent all the numbers that can be use there
+you can also specified specific numbers acording with the
+chart bellow
+
+*    *    *    *    *
+┬    ┬    ┬    ┬    ┬
+│    │    │    │    │
+│    │    │    │    └ day of week (0 - 7) (0 or 7 is Sun)
+│    │    │    └───── month (1 - 12)
+│    │    └────────── day of month (1 - 31)
+│    └─────────────── hour (0 - 23)
+└──────────────────── minute (0 - 59)
+
+for example doing "--cronset `0 7 * * 5`"
+will execute the reset schedule every  friday at 3 AM
+or 7 AM UTC, why we use UTC? because the server this bot
+is hosted uses that time
+
+there is other comand that can be use to custimize the 
+schedule even further but to learn more about then and
+use a template for your cron taks go to
+https://crontab.guru/ for more info help```
+
+if this comand is too complex just use **--timer** for ease of use

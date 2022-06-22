@@ -1,0 +1,4 @@
+#check if a list is given else is reverted to a default list
+test ! "$1" = "undefined" &&
+  path=$1 ||
+  path="./default.list"
