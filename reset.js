@@ -2,8 +2,8 @@ const {client} = require("./main.js")
 const Translator = require("./bash/tr.js")
 const sh = new Translator
 const fs = require("fs")
-const list = "./channels.list"
-const templ = "./template.sav"
+const list = "./saves/channels.list"
+const templ = "./saves/template.sav"
 const serch = client.channels.cache
 
 

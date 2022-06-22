@@ -1,7 +1,7 @@
 **Resetty-bot clean all message from specific channel on your discord**
 
-this bot will take a list of channels and set them up to be scrub
-of all their message at a daly schedule
+this bot will take a list of channels and set them up to be scrubbed
+of all their messages on a daily schedule
 
 use **--addthis** on a channel to the "channels list"
 and use **--timer HOUR** to change your "reset schedule"

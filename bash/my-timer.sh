@@ -8,9 +8,9 @@ ERROR () {
 
 test -n "$date" && test $date -le 23 && test $date -ge 0 || ERROR
 
-echo ${date}:00 HS > ./schedule.sav
+echo ${date}:00 HS > ./saves/schedule.sav
 
 test $date -le 20 && date=$(expr $date + 4) || date=$(expr $date - 20)
 
-echo "0 $date * * *" > ./timer.sav
+echo "0 $date * * *" > ./saves/timer.sav
 echo time set at ${date}:00 UTC
