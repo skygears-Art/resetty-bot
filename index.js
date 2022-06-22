@@ -4,7 +4,7 @@ const fs = require("fs")
 const Translator = require("./bash/tr.js")
 const sh = new Translator
 const reset = require("./reset.js")
-const token = process.env['DAKEY']
+const token = process.env.DAKEY
 const list = "./channels.list"
 
 const job = cronjs.scheduleJob(`0 0 31 12 0`, () => {
@@ -13,11 +13,10 @@ const job = cronjs.scheduleJob(`0 0 31 12 0`, () => {
 })
 
 sh.on("timeChange", () => {
-  console.log("job updated")
   if (job.reschedule(`${fs.readFileSync("./timer.sav")}`)) {
     console.log(`job updated to ${fs.readFileSync("./timer.sav")}`)
   }
-  else {console.log("invalid cron task please fix")}
+  else {console.log("INVALID CRON TASK please fix")}
 })
 
 client.on("ready", () => {
@@ -93,7 +92,7 @@ client.on("messageCreate", (msg) => {
         console.log(txt)
         fs.writeFileSync(`timer.sav`, txt)
         fs.writeFileSync("./schedule.sav", "CUSTOM")
-        return msg.channel.send(`**warning** you are setting the cron task manually to **\`${txt}\`** for more information use **--cronhelp**`)
+        return msg.channel.send(`**warning** you are changing the cron task manually to **\`${txt}\`** for more information use **--cronhelp**`)
       }
       msg.channel.send("not a valid cron task you can also use **--timer HOUR** to setup the reset schedule")
     }

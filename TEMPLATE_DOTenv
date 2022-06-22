@@ -1,0 +1,4 @@
+{
+  "_comment": "you have to put your bot token in the TOKEN area and turn this file into .env"
+  "DAKEY": "TOKEN"
+}

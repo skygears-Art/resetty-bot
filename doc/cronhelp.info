@@ -1,13 +1,13 @@
 ```cron is a format use on crontab a program that allow you
-to execute comands on a diferent time
+to execute comands on a schelude
 
 in the case of this bot is use to set the "reset schedule"
 
-the way cronset must be use is by doing this
---cron `* * * * *`
-those can represent all the numbers that can be use there
-you can also specified specific numbers acording with the
-chart bellow
+the way --cronset must be format is like this
+--cronset `* * * * *`
+the * represent "every number" or "every time"
+but you can also specific number see chart below
+to know what you can use whenre
 
 *    *    *    *    *
 ┬    ┬    ┬    ┬    ┬
@@ -28,4 +28,4 @@ schedule even further but to learn more about then and
 use a template for your cron taks go to
 https://crontab.guru/ for more info help```
 
-if this comand is too complex just use **--timer** for ease of use
+for a more simple command to set the schedule use **--timer HOUR**

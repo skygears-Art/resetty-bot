@@ -1,5 +1,5 @@
-**Resetty-bot clean all message from specific channel on your discord**
-
+# resetty-bot
+a discord bot for cleaning channels
 this bot will take a list of channels and set them up to be scrub
 of all their message at a daly schedule
 
@@ -33,11 +33,12 @@ inmedially scrubs all the message from the "channels list"
 
 --cronset `CRON FORMAT`
 this is a more complex alternative to the --timer command
-use a format that is use to schedule timers on servers
+use a format that is use to schedule timers on server
 for more info on the this command use "--cronhelp"
 
 --cronhelp
 give you information on how to use --cronset and cron format
 
 --help
-give you this guide```
+give you this Guide
+```
