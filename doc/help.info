@@ -27,7 +27,7 @@ you can only put numbers from 0 to 23 for example
 is the message that will be displayed" on a channel 
 after being scrubbed
 
---resetnow
+--resetnow or --scrubnow
 immediately scrubs all the message from the "channels list"
 
 --cronset `CRON FORMAT`

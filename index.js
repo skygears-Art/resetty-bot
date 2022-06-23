@@ -12,6 +12,15 @@ const job = cronjs.scheduleJob(`0 0 31 12 0`, () => {
   console.log(`channel updated`)
 })
 
+function fun () {
+    var co = ""
+    var ls = sh.lister(list)
+    ls.forEach( i =>{
+        return co = co + client.channels.cache.get(i).name + ", "
+    })
+    return co.slice(0, str.length - 2))
+}
+
 sh.on("timeChange", () => {
   if (job.reschedule(`${fs.readFileSync("./saves/timer.sav")}`)) {
     console.log(`job updated to ${fs.readFileSync("./saves/timer.sav")}`)
@@ -29,20 +38,21 @@ client.on("ready", () => {
 
 //Comands triggers
 client.on("messageCreate", (msg) => {
+
   //                                        "--schedule" command
   if (msg.content.startsWith("--schedule")) {
-    var where = `<#${sh.lister(list).join('> <#')}>`
+    var where = `**${fun()}**`
     if (fs.readFileSync("./saves/schedule.sav") == "CUSTOM") {
       var when = fs.readFileSync("./saves/timer.sav")
-      return msg.channel.send(`the chennels ${where} are being reset with a cron task of \`${when}\``)
+      return msg.channel.send(`the channels ${where} are being scrubbed with a cron task of \`${when}\``)
     }
     var when = fs.readFileSync("./saves/schedule.sav")
-    msg.channel.send(`the chennel ${where} are being reset daily at **${when}**`)
+    return msg.channel.send(`the channels ${where} are being scrubbed daily at **${when}**`)
   }
 
   //                                        "--help" command
   if (msg.content.startsWith("--help")) {
-    msg.channel.send(`${fs.readFileSync("./doc/help.info")}`)
+    return msg.channel.send(`${fs.readFileSync("./doc/help.info")}`)
   }
   //this is for admin and owner server only
   var aid = msg.guild.roles.highest.members.has(`${msg.author.id}`)
@@ -50,38 +60,38 @@ client.on("messageCreate", (msg) => {
 
     //                                      "--addthis" command
     if (msg.content.startsWith("--addthis")) {
-      msg.channel.send(`<#${msg.channel.id}> is going to be **reset**`)
-      sh.push(`${msg.channel.id}`, list)
+      msg.channel.send(`<#${msg.channel.id}> is going to be **scrubbed**`)
+      return sh.push(`${msg.channel.id}`, list)
     }
 
     //                                      "--removethis" command
     if (`${msg.content}` == `--removethis` || `${msg.content}` == `--rmthis` ) {
       sh.pull(`${msg.channel.id}`, list);
-      msg.channel.send(`<#${msg.channel.id}> is not going to be reset`)
+      return msg.channel.send(`<#${msg.channel.id}> is not going to be scrubbed`)
     }
 
     //                                      "--timer" command
     if (msg.content.startsWith("--timer")) {
       var num = msg.content.slice(8, 10)
       if (sh.timer(`"${num}"`)) {
-        return msg.channel.send(`reset time set at **${num}:00 HS** everyday`)
+        return msg.channel.send(`scrub time set at **${num}:00 HS** everyday`)
       }
       job.reschedule(`${fs.readFileSync("./saves/timer.sav")}`)
-      msg.channel.send(`after **--timer** please put a number between **0 and 23**`)
+      return msg.channel.send(`after **--timer** please put a number between **0 and 23**`)
     }
 
     //                                      "--template" commandd
     if (msg.content.startsWith("--template")) {
       fs.writeFileSync(`./saves/template.sav`, msg.content.slice(11))
-      msg.channel.send(`the follow message **' welcome to CHANNEL - ${msg.content.slice(11)} '** will apear on a newly reset channel`)
+      return msg.channel.send(`the following message **' welcome to CHANNEL - ${msg.content.slice(11)} '** will appear on a newly scrubbed channel`)
     }
 
     //                                      "--resetnow" command
-    if (msg.content.startsWith("--resetnow")||msg.content.startsWith("--rstnow")) {
+    if (msg.content.startsWith("--resetnow")||msg.content.startsWith("--scrubnow")) {
       if (`${fs.readFileSync(list)}` != ""){
         return reset.rst()
       }
-      msg.channel.send("please add **at less one channel** for reset")
+      return msg.channel.send("please add **at less one channel** for to the channel list")
     }
 
     //                                      "--cronset" command
@@ -94,12 +104,12 @@ client.on("messageCreate", (msg) => {
         fs.writeFileSync("./saves/schedule.sav", "CUSTOM")
         return msg.channel.send(`**warning** you are changing the cron task manually to **\`${txt}\`** for more information use **--cronhelp**`)
       }
-      msg.channel.send("not a valid cron task you can also use **--timer HOUR** to setup the reset schedule")
+      return msg.channel.send("not a valid cron task you can also use **--timer HOUR** to setup the scrub schedule")
     }
 
     //                                      "--cronhelp" command
     if (msg.content.startsWith("--cronhelp")){
-      msg.channel.send(`${fs.readFileSync("./doc/cronhelp.info")}`)
+      return msg.channel.send(`${fs.readFileSync("./doc/cronhelp.info")}`)
     }
   }
 })

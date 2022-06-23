@@ -8,7 +8,7 @@ class Translator extends EventEmitter {
       if (error != null) {
         return console.log("no item was given")
       }
-      console.log(stdout)
+      return console.log(stdout)
     })
   }
   pull(item, path) {
@@ -16,7 +16,7 @@ class Translator extends EventEmitter {
       if (error != null) {
         return console.log("add atless one item to the list")
       }
-      console.log(stdout)
+      return console.log(stdout)
     })
   }
   lister(path) {
