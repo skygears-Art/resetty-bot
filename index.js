@@ -12,14 +12,14 @@ const job = cronjs.scheduleJob(`0 0 31 12 0`, () => {
   console.log(`channel updated`)
 })
 
-function fun () {
-    var co = ""
-    var ls = sh.lister(list)
-    ls.forEach( i =>{
-        return co = co + client.channels.cache.get(i).name + ", "
-    })
-    return co.slice(0, str.length - 2))
-}
+//function fun () { this crash reverting to fix later
+//    var co = ""
+//    var ls = sh.lister(list)
+//    ls.forEach( i =>{
+//        return co = co + client.channels.cache.get(i).name + ", "
+//    })
+//    return co.slice(0, str.length - 2))
+//}
 
 sh.on("timeChange", () => {
   if (job.reschedule(`${fs.readFileSync("./saves/timer.sav")}`)) {
@@ -41,7 +41,7 @@ client.on("messageCreate", (msg) => {
 
   //                                        "--schedule" command
   if (msg.content.startsWith("--schedule")) {
-    var where = `**${fun()}**`
+    var where = `<#${sh.lister(list).join('> <#')}>`
     if (fs.readFileSync("./saves/schedule.sav") == "CUSTOM") {
       var when = fs.readFileSync("./saves/timer.sav")
       return msg.channel.send(`the channels ${where} are being scrubbed with a cron task of \`${when}\``)
