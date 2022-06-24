@@ -6,11 +6,14 @@ ERROR () {
   exit 0
 }
 
-test -n "$date" && test $date -le 23 && test $date -ge 0 || ERROR
+test -n "$date" && test $date -le 7 && test $date -ge 1 || ERROR
 
-echo ${date}:00 HS > ./saves/schedule.sav
+fl=
+test "$date" = "1" && fl=1 && echo everyday > ./saves/schedule.sav ||
+echo every ${date} days > ./saves/schedule.sav
 
-test $date -le 20 && date=$(expr $date + 4) || date=$(expr $date - 20)
+intval="*"
+test -z $fl && intval="*/${date}"
 
-echo "0 $date * * *" > ./saves/timer.sav
-echo time set at ${date}:00 UTC
+echo "0 7 $intval * *" > ./saves/timer.sav
+echo scrub schedule set to happen every ${date} days

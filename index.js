@@ -44,10 +44,10 @@ client.on("messageCreate", (msg) => {
     var where = `<#${sh.lister(list).join('> <#')}>`
     if (fs.readFileSync("./saves/schedule.sav") == "CUSTOM") {
       var when = fs.readFileSync("./saves/timer.sav")
-      return msg.channel.send(`the channels ${where} are being scrubbed with a cron task of \`${when}\``)
+      return msg.channel.send(`The channels ${where} are being scrubbed with a cron task of \`${when}\``)
     }
     var when = fs.readFileSync("./saves/schedule.sav")
-    return msg.channel.send(`the channels ${where} are being scrubbed daily at **${when}**`)
+    return msg.channel.send(`The channels ${where} are being scrubbed **${when}**`)
   }
 
   //                                        "--help" command
@@ -72,18 +72,21 @@ client.on("messageCreate", (msg) => {
 
     //                                      "--timer" command
     if (msg.content.startsWith("--timer")) {
-      var num = msg.content.slice(8, 10)
+      var num = msg.content.slice(8, 9)
       if (sh.timer(`"${num}"`)) {
-        return msg.channel.send(`scrub time set at **${num}:00 HS** everyday`)
+          if (num == "1") {
+              return msg.channel.send(`The listed channels will be scrubbed **everyday**`)
+        }
+        return msg.channel.send(`The listed channels will be scrubbed **every ${num} days**`)
       }
       job.reschedule(`${fs.readFileSync("./saves/timer.sav")}`)
-      return msg.channel.send(`after **--timer** please put a number between **0 and 23**`)
+      return msg.channel.send(`After **--timer** please put a number between **0 and 7**`)
     }
 
     //                                      "--template" commandd
     if (msg.content.startsWith("--template")) {
       fs.writeFileSync(`./saves/template.sav`, msg.content.slice(11))
-      return msg.channel.send(`the following message **' welcome to CHANNEL - ${msg.content.slice(11)} '** will appear on a newly scrubbed channel`)
+      return msg.channel.send(`The following message **' welcome to CHANNEL - ${msg.content.slice(11)} '** will appear on a newly scrubbed channel`)
     }
 
     //                                      "--resetnow" command
@@ -91,7 +94,7 @@ client.on("messageCreate", (msg) => {
       if (`${fs.readFileSync(list)}` != ""){
         return reset.rst()
       }
-      return msg.channel.send("please add **at less one channel** for to the channel list")
+      return msg.channel.send("Please add **at less one channel** for to the channel list")
     }
 
     //                                      "--cronset" command
@@ -102,9 +105,9 @@ client.on("messageCreate", (msg) => {
         console.log(txt)
         fs.writeFileSync(`./saves/timer.sav`, txt)
         fs.writeFileSync("./saves/schedule.sav", "CUSTOM")
-        return msg.channel.send(`**warning** you are changing the cron task manually to **\`${txt}\`** for more information use **--cronhelp**`)
+        return msg.channel.send(`**Warning** you are changing the cron task manually to **\`${txt}\`** for more information use **--cronhelp**`)
       }
-      return msg.channel.send("not a valid cron task you can also use **--timer HOUR** to setup the scrub schedule")
+      return msg.channel.send("Not a valid cron task you can also use **--timer HOUR** to setup the scrub schedule")
     }
 
     //                                      "--cronhelp" command
