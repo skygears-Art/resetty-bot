@@ -14,7 +14,7 @@ class Translator extends EventEmitter {
   pull(item, path) {
     sh.exec(`./bash/pull.sh ${path} ${item}`, (error, stdout, stderr) => {
       if (error != null) {
-        return console.log("add atless one item to the list")
+        return console.log("that item isn't there")
       }
       return console.log(stdout)
     })
@@ -33,6 +33,12 @@ class Translator extends EventEmitter {
     this.emit("timeChange")
     console.log(ouput)
     return true
+  }
+  script(commd) {
+      var exc = `./bash/parser.sh ${commd}`
+      var str = `${sh.execSync(exc)}`
+      console.log(str)
+      return str.trimEnd()
   }
 }
 

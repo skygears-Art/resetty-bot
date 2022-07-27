@@ -12,15 +12,6 @@ const job = cronjs.scheduleJob(`0 0 31 12 0`, () => {
   console.log(`channel updated`)
 })
 
-//function fun () { this crash reverting to fix later
-//    var co = ""
-//    var ls = sh.lister(list)
-//    ls.forEach( i =>{
-//        return co = co + client.channels.cache.get(i).name + ", "
-//    })
-//    return co.slice(0, str.length - 2))
-//}
-
 sh.on("timeChange", () => {
   if (job.reschedule(`${fs.readFileSync("./saves/timer.sav")}`)) {
     console.log(`job updated to ${fs.readFileSync("./saves/timer.sav")}`)
@@ -28,7 +19,9 @@ sh.on("timeChange", () => {
   else {console.log("INVALID CRON TASK please fix")}
 })
 
+//                                      //ON READY/ TODO make save.csv when there isn't one remplace save folder with it
 client.on("ready", () => {
+  //sh.script("cat save.csv | awk -F , '{print $2}'")
   if (job.reschedule(`${fs.readFileSync("./saves/timer.sav")}`)) {
     console.log(`job updated to ${fs.readFileSync("./saves/timer.sav")}`)
   }
@@ -36,7 +29,7 @@ client.on("ready", () => {
   console.log(`logged as ${client.user.tag}`)
 })
 
-//Comands triggers
+//Commands triggers
 client.on("messageCreate", (msg) => {
 
   //                                        "--schedule" command
@@ -101,11 +94,13 @@ client.on("messageCreate", (msg) => {
     if (msg.content.startsWith("--cronset")){
       var com = msg.content.slice(10).replace("`", "")
       var txt = com.replace("`", "")
-      if (job.reschedule(txt) && txt !== "") {
-        console.log(txt)
-        fs.writeFileSync(`./saves/timer.sav`, txt)
-        fs.writeFileSync("./saves/schedule.sav", "CUSTOM")
-        return msg.channel.send(`**Warning** you are changing the cron task manually to **\`${txt}\`** for more information use **--cronhelp**`)
+      if (txt.length > 8) {
+        if (job.reschedule(txt)) {
+            console.log(txt)
+            fs.writeFileSync(`./saves/timer.sav`, txt)
+            fs.writeFileSync("./saves/schedule.sav", "CUSTOM")
+            return msg.channel.send(`**Warning** you are changing the cron task manually to **\`${txt}\`** for more information use **--cronhelp**`)
+        }
       }
       return msg.channel.send("Not a valid cron task you can also use **--timer HOUR** to setup the scrub schedule")
     }
